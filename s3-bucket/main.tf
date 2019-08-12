@@ -10,6 +10,9 @@ resource "aws_s3_bucket" "testBucket" {
   versioning {
     enabled = true
   }
+
+  #destroy even if the bucket is not empty
+  force_destroy = true
  
   lifecycle_rule {
     enabled = true
@@ -31,10 +34,11 @@ resource "aws_s3_bucket" "testBucket" {
   }
 }
 
+#objects to upload when there is change in content
 resource "aws_s3_bucket_object" "file_upload" {
   bucket   = "tf-test-bucket-raghu"
   key      = "autoupload"
-  source   = "FILE-PATH"
-  etag     = "${filemd5("FILE-PATH")}"
+  source   = "/Users/rlokinen/Desktop/Backup/302-Kubernetes.pptx"
+  etag     = "${filemd5("/Users/rlokinen/Desktop/Backup/302-Kubernetes.pptx")}"
 
 }
