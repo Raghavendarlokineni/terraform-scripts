@@ -1,0 +1,16 @@
+import os
+import pipes
+
+keysList = ['aws_access_key_id', 'aws_secret_access_key']
+awsKeys = {}
+filePath = 'credentials'
+
+with open(filePath, 'r') as credsFile :
+    for line in credsFile.readlines():
+        listLine = line.strip().split(' ')
+        if (any (key in keysList for key in listLine) & (len(listLine) > 2)):
+            awsKeys[listLine[0]] = listLine[2]
+print(awsKeys)
+
+for key, value in awsKeys.items():
+    print("export {0}={1}".format(key, pipes.quote(value)))
